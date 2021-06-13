@@ -1,6 +1,10 @@
-FROM centos:latest
+FROM ubuntu
 MAINTAINER The Contos project
-RUN yum -y install httpd
-COPY index.html /var/www/html
+#Install git
+RUN apt-get update \        
+     apt-get install -y apache2 git
+RUN systemctl start apache2
+RUN systemctl enable apache2
+RUN git clone -b https://github.com/sivanandini475/dev.git /var/www/html/
 EXPOSE 80
-CMD /usr/sbin/httpd -D FOREGROUND
+CMD /usr/sbin/apache2 -D FOREGROUND
